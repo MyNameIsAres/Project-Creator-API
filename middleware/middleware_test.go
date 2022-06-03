@@ -1,24 +1,53 @@
 package middleware
 
 import (
-	"fmt"
+	"net/http"
 	"testing"
 )
 
-func MiddlewareTest(t *testing.T) {
-	middlewareChain := MiddlewareChain{
-		storage: map[string]MiddlewareStorage{
-			"log":    logging,
-			"filter": filterContentType,
+//! Test functions are incomplete
+// TODO Continue to create middleware tests as the project progresses.
+
+func TestValidateGroupIdReturnsError(t *testing.T) {
+	middlewareStorage := MiddlewareStorageGroup{
+		storage: map[string][]MiddlewareStorage{
+			"api": {
+				func(handler http.Handler) http.Handler {
+					return handler
+				},
+			},
 		},
 	}
 
-	// Middleware(http.DefaultServeMux, "")
+	keys, groupIdError := validateGroupId("hello", &middlewareStorage)
 
-	fmt.Println(middlewareChain)
+	if keys != nil {
+		t.Errorf("Wanted error, got %d number of keys", len(keys))
+	}
+
+	if groupIdError == nil {
+		t.Errorf("Expected error, got nil instead")
+	}
 }
 
-// func loggingTest(t *testing.T) {
+func TestValidateGroupId(t *testing.T) {
+	middlewareStorage := MiddlewareStorageGroup{
+		storage: map[string][]MiddlewareStorage{
+			"api": {
+				func(handler http.Handler) http.Handler {
+					return handler
+				},
+			},
+		},
+	}
 
-// 	logging(http.DefaultServeMux)
-// }
+	keys, groupIdError := validateGroupId("api", &middlewareStorage)
+
+	if keys == nil {
+		t.Errorf("Wanted keys got nil instead.")
+	}
+
+	if groupIdError != nil {
+		t.Errorf("Expected keys got error instead")
+	}
+}
