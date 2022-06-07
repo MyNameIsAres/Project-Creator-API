@@ -6,10 +6,11 @@ import (
 	"net/http"
 
 	// ? This may be completely wrong, and an unecessary, use of the . operator.
-	. "github.com/org/project_creator_api/middleware"
+	"github.com/org/project_creator_api/middleware"
 )
 
 // ? Is it get? Is it post? Is it .. gost? Pet? Who knows.
+
 func postHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "Request failed. Please create a POST request only.", http.StatusMethodNotAllowed)
@@ -24,7 +25,6 @@ func postHandler(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(err.Error()))
 		return
 	}
-
 }
 
 func runServer() {
@@ -33,10 +33,9 @@ func runServer() {
 	myHandler := http.HandlerFunc(postHandler)
 
 	//! Test routes, do not include in production.
-	mux.Handle("/api/project", Middleware(myHandler, "log", "filter", "foobar"))
-	mux.Handle("/api/project/foobar", MiddlewareGroup(myHandler, "api"))
-
+	mux.Handle("/api/project", middleware.Middleware(myHandler, "log", "filter", "foobar"))
 	http.ListenAndServe(":8080", mux)
+	mux.Handle("/sadlkfj", myHandler)
 }
 
 func main() {
