@@ -35,7 +35,6 @@ func runServer() {
 	//! Test routes, do not include in production.
 	mux.Handle("/api/project", middleware.Middleware(myHandler, "log", "filter", "foobar"))
 	http.ListenAndServe(":8080", mux)
-	mux.Handle("/sadlkfj", myHandler)
 }
 
 func main() {
