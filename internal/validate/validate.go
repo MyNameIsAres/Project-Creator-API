@@ -5,6 +5,7 @@ import (
 	"github.com/org/project_creator_api/models"
 )
 
+//? This currently lives inside the internal package. However, we should consider to move it in the future.
 func Validate(request models.Project) error {
 	err := validator.New().Struct(request)
 

@@ -47,6 +47,13 @@ func postHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println(err)
 	}
+
+	// template, err := services.CreateTemplate("main_class.tmpl", "./internal/templates/")
+	// fmt.Println(template)
+
+	// if err != nil {
+	// 	fmt.Println(err)
+	// }
 }
 
 func runServer() {

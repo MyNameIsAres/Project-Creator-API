@@ -1,16 +1,5 @@
 package models
 
-import (
-	"fmt"
-
-	"github.com/go-playground/validator/v10"
-)
-
-func foo() {
-	validator := validator.New()
-	fmt.Println(validator)
-}
-
 type Project struct {
 	ProjectMeta   projectMeta  `json:"meta" validate:"required"`
 	Language      string       `json:"language" validate:"required"`
